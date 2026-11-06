@@ -1,0 +1,16 @@
+# Render Blueprint: one Docker web service (API + built client). Use MongoDB Atlas for the database.
+services:
+  - type: web
+    name: spendwise
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGO_URI
+        sync: false        # paste your Atlas connection string in the Render dashboard
+      - key: CLIENT_URL
+        sync: false        # your service URL, e.g. https://spendwise.onrender.com

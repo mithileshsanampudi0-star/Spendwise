@@ -1,0 +1,16 @@
+# MONGO_URI=<your Atlas connection string> docker compose up --build   ->   http://localhost:5000
+# (or put MONGO_URI and JWT_SECRET in a .env file next to this file)
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      # MongoDB Atlas connection string (mongodb+srv://...). Required.
+      MONGO_URI: ${MONGO_URI:?Set MONGO_URI to your MongoDB Atlas connection string}
+      # Replace before any real use: openssl rand -hex 48
+      JWT_SECRET: ${JWT_SECRET:-change-me-please-use-a-long-random-string}
+      CLIENT_URL: http://localhost:5000
+      # Plain http on localhost: allow the cookie without HTTPS. Remove when deploying behind HTTPS.
+      COOKIE_SECURE: "false"
